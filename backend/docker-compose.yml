@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  db:
+    image: timescale/timescaledb-ha:pg16-latest
+    container_name: creeklink_db
+    environment:
+      POSTGRES_USER: creeklink
+      POSTGRES_PASSWORD: creeklink_password
+      POSTGRES_DB: creeklink
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+      build: .
+      container_name: creeklink_app
+      command: uvicorn creekingest.main:app --host 0.0.0.0 --port 8000
+      environment:
+        DATABASE_URL: postgresql://creeklink:creeklink_password@db:5432/creeklink
+        ALERT_EMAIL_FROM: "creeklink@example.com"
+        ALERT_EMAIL_TO: "you@example.com"
+        ALERT_WATER_LEVEL_MM_THRESHOLD: "800"   # 0.8m example
+        SMTP_HOST: "smtp.example.com"
+        SMTP_PORT: "587"
+        SMTP_USER: "creeklink@example.com"
+        SMTP_PASSWORD: "your_smtp_password"
+      depends_on:
+        - db
+      ports:
+        - "8000:8000"
+
+volumes:
+  db_data:
