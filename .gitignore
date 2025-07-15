@@ -1,0 +1,65 @@
+# === C/CMake ===
+build/
+cmake-build-*/
+
+# ESP-IDF generated files
+sdkconfig.old
+
+# Compiler / object files
+*.o
+*.obj
+*.d
+*.a
+*.so
+*.dll
+*.exe
+*.map
+*.elf
+*.bin
+*.log
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Packaging / tooling
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Test / tooling caches
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# === Databases ===
+*.db
+*.sqlite
+*.sqlite3
+timescale-data/
+pgdata/
+
+# Local config/settings files
+.env
+.env.*
+*.Local
+*.secret
+*.pem
+*.key
+
+# === Virtualenv ===
+**/venv/
+**/.venv/
+
+# === Editor directories and files ===
+.vscode
+.idea/
+**/.idea/
+*.code-workspace
+
+# === OS-specific files ===
+.DS_Store
+Thumbs.db
