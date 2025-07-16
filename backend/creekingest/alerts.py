@@ -8,6 +8,7 @@ from typing import Optional
 
 from creekingest.config import settings
 
+
 def send_threshold_alert(device_id: str, water_level_mm: Optional[int]) -> None:
     """
     Send an email alert if the water level exceeds the configured threshold.
