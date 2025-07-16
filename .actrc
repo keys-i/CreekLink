@@ -1,0 +1,11 @@
+# Use a cheaper default image (smaller/faster than full ubuntu-latest)
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
+
+# Always load environment variables from this file when running workflows
+--env-file .env
+
+# Show logs as they stream
+--verbose
+
+# Always run in dry-run mode by default (no external side effects)
+--dryrun
