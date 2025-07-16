@@ -1,0 +1,9 @@
+{
+  "end_device_ids": { "device_id": "creeklink-node-01" },
+  "uplink_message": {
+    "decoded_payload": {
+      "water_level_mm": 650,
+      "bucket_tips": 2
+    }
+  }
+}

@@ -3,8 +3,7 @@ name: Check python Linting
 on:
   push:
     paths:
-      - "A1/a1.py"
-      - "A2/a2.py"
+      - "*.py"
 
 jobs:
   lint:
