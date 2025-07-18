@@ -1,0 +1,51 @@
+name: C Format Check
+
+on:
+  push:
+    paths:
+      - "firmware/main/**.c"
+      - "firmware/main/**.h"
+      - ".clang-format"
+  pull_request:
+    paths:
+      - "firmware/main/**.c"
+      - "firmware/main/**.h"
+      - ".clang-format"
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Show clang-format version
+        run: clang-format --version
+
+      - name: Check C formatting
+        run: |
+          FILES=$(find firmware/main -type f \( -name "*.c" -o -name "*.h" \))
+          if [ -z "$FILES" ]; then
+            echo "No C files found under firmware/main; skipping."
+            exit 0
+          fi
+
+          # Run clang-format in-place on a temp copy and diff
+          TMPDIR=$(mktemp -d)
+          cp -r firmware/main "$TMPDIR/main"
+
+          clang-format -i $FILES
+
+          diff -ru "$TMPDIR/main" firmware/main || (
+            echo
+            echo "clang-format would make changes. Please run:"
+            echo "  clang-format -i firmware/main/*.c firmware/main/*.h"
+            echo "or use your IDE's clang-format integration."
+            exit 1
+          )

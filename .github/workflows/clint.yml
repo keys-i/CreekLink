@@ -1,0 +1,43 @@
+name: C Lint (cppcheck)
+
+on:
+  push:
+    paths:
+      - "firmware/main/**.c"
+      - "firmware/main/**.h"
+  pull_request:
+    paths:
+      - "firmware/main/**.c"
+      - "firmware/main/**.h"
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install cppcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck
+
+      - name: Run cppcheck on firmware
+        run: |
+          FILES=$(find firmware/main -type f \( -name "*.c" -o -name "*.h" \))
+          if [ -z "$FILES" ]; then
+            echo "No C files found under firmware/main; skipping."
+            exit 0
+          fi
+
+          # Basic flags:
+          # --enable=warning,style,performance,portability: useful checks
+          # --inline-suppr: allow inline // cppcheck-suppress comments
+          # --error-exitcode=1: fail CI if there are findings
+          cppcheck \
+            --enable=warning,style,performance,portability \
+            --inline-suppr \
+            --error-exitcode=1 \
+            --template="{file}:{line}: {severity}: {message} ({id})" \
+            firmware/main
