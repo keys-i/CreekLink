@@ -24,7 +24,9 @@ def health() -> Dict[str, str]:
 
 
 @app.post("/uplink")
-async def uplink(request: Request, db: Session = Depends(get_db)) -> Dict[str, str]:
+async def uplink(
+    request: Request, db: Session = Depends(get_db)
+) -> Dict[str, str]:
     """Handle uplink webhooks from the LoRaWAN network server.
 
     Expects JSON containing a device identifier and a decoded payload. The
@@ -33,7 +35,9 @@ async def uplink(request: Request, db: Session = Depends(get_db)) -> Dict[str, s
     """
     try:
         payload: Dict[str, Any] = await request.json()
-    except Exception as exc:  # noqa: PERF203 - broad to normalise client errors
+    except (
+        Exception
+    ) as exc:  # noqa: PERF203 - broad to normalise client errors
         raise HTTPException(status_code=400, detail="Invalid JSON") from exc
 
     # Extract device_id (supports TTN-style payloads and a fallback field)

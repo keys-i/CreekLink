@@ -31,5 +31,6 @@ class Reading(Base):
         """Return a concise string representation of the reading."""
         return (
             f"<Reading id={self.id} device_id={self.device_id!r} "
-            f"water_level_mm={self.water_level_mm} bucket_tips={self.bucket_tips}>"
+            f"water_level_mm={self.water_level_mm} "
+            f"bucket_tips={self.bucket_tips}>"
         )

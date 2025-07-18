@@ -36,4 +36,4 @@ jobs:
           pip install flake8==6.1.0
 
       - name: Run flake8
-        run: flake8 A1/a1.py A2/a2.py
+        run: flake8 backend/

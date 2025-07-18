@@ -33,7 +33,9 @@ class Settings(BaseSettings):
         smtp_password: Password for SMTP authentication, if required.
     """
 
-    database_url: str = "postgresql://creeklink:creeklink_password@db:5432/creeklink"
+    database_url: str = (
+        "postgresql://creeklink:creeklink_password@db:5432/creeklink"
+    )
 
     alert_email_from: str = "creeklink@example.com"
     alert_email_to: str = "you@example.com"
